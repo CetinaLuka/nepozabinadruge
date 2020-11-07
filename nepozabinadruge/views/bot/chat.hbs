@@ -8,7 +8,7 @@
 <main>
     <div class="layout">
         <!-- End of Create Chat -->
-        <div class="main">
+        <div class="main" style="height:auto">
             <div class="tab-content" id="nav-tabContent">
                 <!-- Start of Babble -->
                 <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel"
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="content" id="content">
+                        <div class="content" id="content" style="height: calc(100vh - 308px)">
                             <div class="container">
                                 <div class="col-md-12 timeline">
                                 </div>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="container">
                             <div class="col-md-12">
-                                <div class="bottom">
+                                <div class="bottom" style="padding: 0px; padding-top: 25px">
                                     <form id="message_input" class="position-relative w-100">
                                         <textarea id="message_text" class="form-control" placeholder="Start typing for reply..." rows="1"
                                             style="padding-left: 20px"></textarea>
@@ -67,8 +67,9 @@
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/chatbot.js"></script>
 <script>
-    function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
-    scrollToBottom(document.getElementById('content'));
+    function scrollToBottom(el) {
+         document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight; 
+    }
     function getTime(){
         var now = new Date(Date.now());
         var formatted = now.getHours() + ":" + now.getMinutes();
@@ -87,6 +88,7 @@
                                         </div>
                                     </div>`;
         $(".timeline").append(message);
+        scrollToBottom();
     }
     function showWriting(){
         console.log("writing");
@@ -126,6 +128,7 @@
         setTimeout(function() {
             $(".timeline").append(message);
         }, 1000);
+        scrollToBottom();
     }
     $(document).ready(function () {
         postBotMessage(escapeHtml("Greetings citizen"));
@@ -151,8 +154,11 @@
         e.preventDefault();
         console.log("form submitted");
         var message = $("#message_text").val();
+        $("#message_text").val("");
         console.log(message);
         postMeMessage(escapeHtml(message));
-        console.log(readMessage(message));
+        var response = readMessage(message);
+        console.log(response);
+        postBotMessage(response);
     });
 </script>
