@@ -1,0 +1,116 @@
+<meta charset="utf-8">
+<meta name="description" content="#">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap core CSS -->
+<link href="../../stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet">
+<!-- Swipe core CSS -->
+<link href="../../stylesheets/swipe.min.css" type="text/css" rel="stylesheet">
+<main>
+    <div class="layout">
+        <!-- End of Create Chat -->
+        <div class="main">
+            <div class="tab-content" id="nav-tabContent">
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel"
+                    aria-labelledby="list-chat-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat1">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="../../images/jelko.jpeg"
+                                                data-toggle="tooltip" data-placement="top" title="Keith"
+                                                alt="avatar"></a>
+                                        <div class="data">
+                                            <h5><a href="#">Jelko</a></h5>
+                                            <span>State speaker</span>
+                                        </div>
+                                        <button class="btn d-md-block d-none" style="margin-right: 0px"><i
+                                                class="material-icons md-30">info</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content" id="content">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="message">
+                                        <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
+                                            data-placement="top" title="Keith" alt="avatar">
+                                        <div class="text-main">
+                                            <div class="text-group">
+                                                <div class="text">
+                                                    <p>Great start guys, I've added some notes to the task. We may need
+                                                        to make some adjustments to the last couple of items - but no
+                                                        biggie!</p>
+                                                </div>
+                                            </div>
+                                            <span>11:07 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="date">
+                                        <hr>
+                                        <span>Today</span>
+                                        <hr>
+                                    </div>
+                                    <div class="message me">
+                                        <div class="text-main">
+                                            <div class="text-group me">
+                                                <div class="text me">
+                                                    <p>Hope you're all ready to tackle this great project. Let's smash
+                                                        some Brand Concept & Design!</p>
+                                                </div>
+                                            </div>
+                                            <span><i class="material-icons">check</i>10:21 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="message">
+                                        <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
+                                            data-placement="top" title="Keith" alt="avatar">
+                                        <div class="text-main">
+                                            <div class="text-group">
+                                                <div class="text typing">
+                                                    <div class="wave">
+                                                        <span class="dot"></span>
+                                                        <span class="dot"></span>
+                                                        <span class="dot"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" placeholder="Start typing for reply..." rows="1"
+                                            style="padding-left: 20px"></textarea>
+                                        <button type="submit" class="btn send"><i
+                                                class="material-icons">send</i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                </div>
+                <!-- End of Babble -->
+            </div>
+        </div>
+    </div> <!-- Layout -->
+</main>
+<script src="../../js/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="dist/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="../../js/vendor/popper.min.js"></script>
+<script src="../../js/swipe.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script>
+    function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
+    scrollToBottom(document.getElementById('content'));
+</script>
