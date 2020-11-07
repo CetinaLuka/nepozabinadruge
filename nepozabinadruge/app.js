@@ -18,10 +18,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth;
-
-export default firebase;
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
