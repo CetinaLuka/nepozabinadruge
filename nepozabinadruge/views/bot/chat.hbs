@@ -34,60 +34,15 @@
                         </div>
                         <div class="content" id="content">
                             <div class="container">
-                                <div class="col-md-12">
-                                    <div class="message">
-                                        <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
-                                            data-placement="top" title="Keith" alt="avatar">
-                                        <div class="text-main">
-                                            <div class="text-group">
-                                                <div class="text">
-                                                    <p>Great start guys, I've added some notes to the task. We may need
-                                                        to make some adjustments to the last couple of items - but no
-                                                        biggie!</p>
-                                                </div>
-                                            </div>
-                                            <span>11:07 PM</span>
-                                        </div>
-                                    </div>
-                                    <div class="date">
-                                        <hr>
-                                        <span>Today</span>
-                                        <hr>
-                                    </div>
-                                    <div class="message me">
-                                        <div class="text-main">
-                                            <div class="text-group me">
-                                                <div class="text me">
-                                                    <p>Hope you're all ready to tackle this great project. Let's smash
-                                                        some Brand Concept & Design!</p>
-                                                </div>
-                                            </div>
-                                            <span><i class="material-icons">check</i>10:21 PM</span>
-                                        </div>
-                                    </div>
-                                    <div class="message">
-                                        <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
-                                            data-placement="top" title="Keith" alt="avatar">
-                                        <div class="text-main">
-                                            <div class="text-group">
-                                                <div class="text typing">
-                                                    <div class="wave">
-                                                        <span class="dot"></span>
-                                                        <span class="dot"></span>
-                                                        <span class="dot"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-12 timeline">
                                 </div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="col-md-12">
                                 <div class="bottom">
-                                    <form class="position-relative w-100">
-                                        <textarea class="form-control" placeholder="Start typing for reply..." rows="1"
+                                    <form id="message_input" class="position-relative w-100">
+                                        <textarea id="message_text" class="form-control" placeholder="Start typing for reply..." rows="1"
                                             style="padding-left: 20px"></textarea>
                                         <button type="submit" class="btn send"><i
                                                 class="material-icons">send</i></button>
@@ -110,7 +65,94 @@
 <script src="../../js/vendor/popper.min.js"></script>
 <script src="../../js/swipe.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/chatbot.js"></script>
 <script>
     function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
     scrollToBottom(document.getElementById('content'));
+    function getTime(){
+        var now = new Date(Date.now());
+        var formatted = now.getHours() + ":" + now.getMinutes();
+        // 20:10:58
+        return formatted;
+    }
+    function postMeMessage(text) {
+        var message = `<div class="message me">
+                                        <div class="text-main">
+                                            <div class="text-group me">
+                                                <div class="text me">
+                                                    <p>`+text+`</p>
+                                                </div>
+                                            </div>
+                                            <span>`+getTime()+`</span>
+                                        </div>
+                                    </div>`;
+        $(".timeline").append(message);
+    }
+    function showWriting(){
+        console.log("writing");
+        var message = `<div class="message writing">
+                            <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
+                                data-placement="top" title="Keith" alt="avatar">
+                            <div class="text-main">
+                                <div class="text-group">
+                                    <div class="text typing">
+                                        <div class="wave">
+                                            <span class="dot"></span>
+                                            <span class="dot"></span>
+                                            <span class="dot"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+        $(".timeline").append(message);
+        setTimeout(function() {
+            $('.writing').hide('slow', function(){ $('.writing').remove(); });
+        }, 1000);
+    }
+    function postBotMessage(text) {
+        var message = `<div class="message">
+                            <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                            <div class="text-main">
+                                <div class="text-group">
+                                    <div class="text">
+                                        <p>`+text+`</p>
+                                        </div>
+                                    </div>
+                                <span>`+getTime()+`</span>
+                            </div>
+                        </div>`;
+        showWriting();
+        setTimeout(function() {
+            $(".timeline").append(message);
+        }, 1000);
+    }
+    $(document).ready(function () {
+        postBotMessage(escapeHtml("Greetings citizen"));
+        console.log("greetings")
+    });
+
+    function escapeHtml (string) {
+        var entityMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        };
+        return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+            return entityMap[s];
+        });
+    }
+    $("#message_input").submit(function(e){
+        e.preventDefault();
+        console.log("form submitted");
+        var message = $("#message_text").val();
+        console.log(message);
+        postMeMessage(escapeHtml(message));
+        console.log(readMessage(message));
+    });
 </script>
