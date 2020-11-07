@@ -12,8 +12,9 @@
     <h1><strong><a href="../../">Spatial</a></strong> by Templated</h1>
     <nav id="nav">
       <ul>
-        <li><a href="../../users/login">Prijava</a></li>
-        <li><a href="../../users/register">Registracija</a></li>
+        <li><a id="logout" href="javascript:void(0);" onclick="logout();">Odjava</a></li>
+        <li><a id="login" href="../../users/login">Prijava</a></li>
+        <li><a id="register" href="../../users/register">Registracija</a></li>
         <li><a href="../../users/register">Prošnje</a></li>
         <li><a href="../../request/list">Prošnje</a></li>
       </ul>
@@ -35,7 +36,45 @@
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    function logout() {
+      firebase.auth().signOut()
+        .then(function (success) {
+          eraseCookie("user");
+          eraseCookie("userId");
+          window.location.href = "http://localhost:3000/";
+        })
+        .catch(function (error) {
+          // Handle Errors here.
+          console.log(error);
+        });
+    }
+
+    
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+    function eraseCookie(name) {
+      document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    if(getCookie("user")){
+      document.getElementById("login").style.visibility = "hidden";
+      document.getElementById("register").style.visibility = "hidden";
+    }
+    else{
+      document.getElementById("logout").style.visibility = "hidden";
+    }
   </script>
 </body>
 

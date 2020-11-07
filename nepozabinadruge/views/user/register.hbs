@@ -2,18 +2,24 @@
 <form action="/users" method="post">
     <input class="form-control" type="text" id="email" placeholder="Email" required><br>
     <input class="form-control" type="password" id="password" placeholder="Password" required><br>
-    <input class="form-control" type="repPassword" id="repPassword" placeholder="Repeat Password" required><br>
-    <input class="form-control btn btn-info" type="button" value="Register" onclick="register()">
+    <input class="form-control" type="password" id="repPassword" placeholder="Repeat Password" required><br>
+    <input class="form-control" type="button" value="Register" onclick="register()">
 </form>
 
 <script>
     function register() {
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
+        var repPassword = document.getElementById("repPassword").value;
+        if(repPassword != password){
+            alert('Passwords are not the same.');
+            return;
+        }
         
         firebase.auth().createUserWithEmailAndPassword (email, password)
             .then(function(success) {
-                console.log(success);
+                setCookie('user',success.user.email,7);
+                setCookie('userId',success.user.uid,7);
                 window.location.href = "http://localhost:3000/";
         })
             .catch(function(error) {
@@ -21,11 +27,21 @@
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode == 'auth/weak-password') {
-    alert('The password is too weak.');
+            alert('The password is too weak.');
         } else {
             alert(errorMessage);
         }
         console.log(error);
         });
+    }
+
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 </script>
