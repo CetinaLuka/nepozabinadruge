@@ -1,3 +1,27 @@
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+var firebase = require("firebase/app");
+
+// Add the Firebase products that you want to use
+require("firebase/auth");
+require("firebase/firestore");
+var firebaseConfig = {
+  apiKey: "AIzaSyCy4I8vK968QoIV1QvWA4UzHG9A2o1vyNE",
+  authDomain: "nepozabinadruge.firebaseapp.com",
+  databaseURL: "https://nepozabinadruge.firebaseio.com",
+  projectId: "nepozabinadruge",
+  storageBucket: "nepozabinadruge.appspot.com",
+  messagingSenderId: "578222346888",
+  appId: "1:578222346888:web:2a43be816fe6a2dd44453d"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+export const auth = firebase.auth
+
+export default firebase;
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
