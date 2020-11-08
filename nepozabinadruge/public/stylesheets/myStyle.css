@@ -84,3 +84,7 @@ ul {
   .myButton:hover {
       background-color: #018786;
   }
+
+  .radio {
+      display: block;
+  }
