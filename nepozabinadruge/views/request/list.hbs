@@ -1,6 +1,8 @@
 
 <h2>Request list</h2>
-<div id="requestList" class="row2"></div>
+<div id="requestList" class="row2 requestList"></div>
+<hr/>
+<div id="myRequestList" class="row2 requestList"></div>
 <a href="../../request/add"> <button type="button" class="myButton" style="margin: auto;" id = "addNewButton">Add new request</button></a>
 
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
@@ -16,24 +18,50 @@
 
     var db = firebase.firestore();
     var element = document.getElementById("requestList");
+    var myElement = document.getElementById("myRequestList");
     db.collection("requests").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
-            var data = '<div class="request col-4" > <textarea class="listArea" rows="6">'
+            var data = '<div class="request col-4" > <div class="requestEdge';
+            if(doc.data().isAccepted){
+                data+=' accDiv';
+            }
+            data+='"><textarea readonly class="listArea" rows="6">'
             data+= `${doc.data().requestText}`;
-            data+='</textarea><br/> <span> Address: <b>';
+            data+='</textarea ><br/> <span> Address: <b>';
             data+= `${doc.data().address}`;
             data+='</b></span>'
-            data+='<button class="myButton" onclick="update(`'
-            data+= `${doc.id}`;
-            data+='`)">I will do it</button>'
-            data+='</div>'
-            element.insertAdjacentHTML("beforeend", data);
+            if(doc.data().isAccepted){
+                data+='<br/><div class="accepted">Request is already accepted</div>'
+            }
+            else{
+                data+='<button class="myButton acceptButton" onclick="update(`'
+                data+= `${doc.id}`;
+                data+='`)">I will do it</button>'
+            }
+            data+='</div></div>'
+            console.log(doc.data().userId +'  ' + getCookie("userId") + '  ' +doc.data().userId == getCookie("userId"))
+            if(doc.data().userId == getCookie("userId")) {
+                data = data.replace("myButton", "deleteButton");
+                myElement.insertAdjacentHTML("beforeend", data);
+            }
+            else element.insertAdjacentHTML("beforeend", data);
         });
     });
 
     function update(id){
-        db.collection("requests").doc(id).update({isAccepted: "true"});
+        db.collection("requests").doc(id).update({isAccepted: true});
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
     }
 
 </script>
