@@ -66,6 +66,7 @@
 <script src="../../js/swipe.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/chatbot.js"></script>
+<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
 <script>
     function scrollToBottom(el) {
          document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight; 
@@ -157,8 +158,16 @@
         $("#message_text").val("");
         console.log(message);
         postMeMessage(escapeHtml(message));
-        var response = readMessage(message);
+        var response = readMessage(message)
         console.log(response);
-        postBotMessage(response);
+        if(response instanceof Promise){
+            console.log("promise");
+            response.then(response => postBotMessage(response));
+        }
+        else{
+            postBotMessage(response);
+        }
+        
+        
     });
 </script>

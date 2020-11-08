@@ -1,5 +1,3 @@
-var stringSimilarity = require('string-similarity');
-
 function readMessage(message) {
     console.log(message);
     console.log("reading");
@@ -14,15 +12,14 @@ function readMessage(message) {
         .replace(/whats/g, "what is")
         .replace(/please /g, "")
         .replace(/ please/g, "");
-
-    
     return compare(trigger, reply, text);
+    //return comparison;
 }
 const trigger = [
     //0 
-    ["hey", "hello", "what is up"],
+    ["hey", "hello", "what is up", "hi", "wazzup", "jov"],
     //1
-    ["what is the state of coronavirus", "number of", "how many infections", "infections", "corona"],
+    ["what is the state of coronavirus", "number of infected", "how many infections", "infections", "corona", "coronavirus"],
     //2
     ["what is going on", "what is up"],
     //3
@@ -48,8 +45,10 @@ const reply = [
     ],
     //2
     [
-        "Nothing much",
-        "Exciting things!"
+        `Ppzuizdsgidsf oidsoihrfdosi woiewfoewn </br>
+        sdoijdsoifndspofinodwsifnpwoijfpewojf </br>
+        <a href='//www.google.com' target='google'>Google</a>`,
+        "<a href='//www.google.com' target='google'>Google</a>"
     ],
     //3
     ["Glad to hear it"],
@@ -71,30 +70,41 @@ const alternative = [
     "Bro..."
 ];
 
-function findAnswer(triggerArray, responseArray, text){
-    var matches = [];
-    for (let x = 0; x < triggerArray.length; x++) {
-        var best = stringSimilarity.findBestMatch(text, triggerArray[x])
-        console.log("best match: "+best);
-        matches.push(best);
-    }
-    console.log(matches)
-}
-
 function compare(triggerArray, replyArray, text) {
-    let item;
+    let item = alternative[Math.floor(Math.random() * alternative.length)];
+    let index = 0;
+
     for (let x = 0; x < triggerArray.length; x++) {
         for (let y = 0; y < replyArray.length; y++) {
             if (triggerArray[x][y] == text) {
                 items = replyArray[x];
                 item = items[Math.floor(Math.random() * items.length)];
+                index = x;
+                break;
             }
         }
     }
-    if(item == undefined){
-        item = alternative[Math.floor(Math.random() * alternative.length)]
+    console.log("index is: " + index);
+    if (index == 1) {
+        console.log("index is 1");
+        return getData();
     }
-    return item;
+    else{
+        return item;
+    }
+}
+function getData() {
+    return fetch("https://api.apify.com/v2/key-value-stores/603AyvQ8QjyqmnZx6/records/LATEST?disableRedirect=true")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            return "Daily new cases: " + data.dailyInfected + "</br>" + "Daily tested: " + data.dailyTested + "</br>" + "Daily deaths: " + data.dailyDeaths+"</br> You can find more data on the <a href='https://covid-19.sledilnik.org/en/stats' target='tracker'>covid-19 tracker site</a>";
+            
+        })
+        .catch(error => {
+            console.log("error");
+            return null;
+        })
 }
 
 
