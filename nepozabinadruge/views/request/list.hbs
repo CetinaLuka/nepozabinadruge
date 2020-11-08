@@ -27,7 +27,6 @@
         querySnapshot.forEach((doc) => {
             array.push(doc.data())
             arrayIds.push(doc.id)
-            console.log(`${doc.id} => ${doc.data()}`);
             var data = '<div class="request col-4" > <div class="requestEdge';
             if(doc.data().isAccepted){
                 data+=' accDiv';
@@ -50,7 +49,6 @@
                 data+='`)">I will do it</button>'
             }
             data+='</div></div>'
-            console.log(doc.data().userId +'  ' + getCookie("userId") + '  ' +doc.data().userId == getCookie("userId"))
             if(doc.data().userId == getCookie("userId")) {
                 data = data.replace("myButton", "deleteButton");
                 data = data.replace("I will do it", "Delete");
@@ -69,13 +67,11 @@
         }
         if(getCookie(userId)==doc.data().userId){
             db.collection("requests").doc(rowId).delete().then(function() {
-                console.log("Document successfully deleted!");
             }).catch(function(error) {
                 console.error("Error removing document: ", error);
             });
         }
         else{
-            console.log("editing")
             db.collection("requests").doc(rowId).update({isAccepted: true});
         }
     }

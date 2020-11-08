@@ -67,7 +67,6 @@
     return fetch("https://api.covid19api.com/country/slovenia/status/confirmed")
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             for(var i=data.length-1;i>data.length-7;i--)
                 last6days.push(data[i].Cases-data[i-1].Cases);
 
