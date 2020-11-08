@@ -19,7 +19,7 @@ const trigger = [
     //0 
     ["hey", "hello", "what is up", "hi", "wazzup", "jov"],
     //1
-    ["what is the state of coronavirus", "number of infected", "how many infections", "infections", "statistics", "daily", "daily corona"],
+    ["what is the state of coronavirus", "number of infected", "how many infections", "infections", "statistics", "daily statistics", "daily corona", "daily stats"],
     //2
     ["what is going on", "what is up"],
     //3
@@ -39,15 +39,17 @@ const trigger = [
     //10
     ["not too good", "not good", "not well", "im not well", "bad", "im not feeling good", "im not feeling well"],
     //11
-    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there a lockdown", "what measures are in place", "current measures", "restrictions", "lockdown", "police hour"],
+    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there lockdown", "what measures are in place", "current measures", "restrictions", "lockdown", "police hour"],
     //12
     ["where can i get more information", "information", "info", "where can i get info", "what is the nuber of the call center", "coronavirus hotline", "phone"],
     //13
-    ["play a game", "play game", "i want to have fun", "can i go see my girlfriend", "i want to play game", "play", "game"],
+    ["play a game", "play game", "i want to have fun", "can i go see my girlfriend", "i want to play game", "play", "game", "I am bored"],
     //14
     ["help", "!help", "/help", "commands", "how to use", "list commands"],
     //15
-    ["i need help with groceries", "groceries", "shopping", "help needed", "shop", "food", "store", "help with groceries", "help shopping"]
+    ["i need help with groceries", "groceries", "shopping", "help needed", "shop", "food", "store", "help with groceries", "help shopping", "need help"],
+    //16
+    ["joke", "tell joke", "tell a joke", "tell me a joke", "tell me joke", "funny", "laugh", "say something funny"]
 ];
 
 const reply = [
@@ -82,15 +84,14 @@ const reply = [
     //8
     [`If you are sick (coughing, feverish or are breathing heavily)<br/>
     <b>• Stay at home</b> and avoid all contacts.</br>
-    <b>• Call you doctor</b>or the emergenci services. They will talk to you and decide if you are at risk of infection. If they decide that you might be infected, they will give you further instructions on the phone.</br></br>
+    <b>• Call you doctor</b> or the emergency services. They will talk to you and decide if you are at risk of infection. If they decide that you might be infected, they will give you further instructions on the phone.</br></br>
     It is also important that we do not go to the doctor, for emergency medical care or to the hospital in person. If we need to seek emergency medical help, we first <b> call her on the phone</b>.</br>
-    Več informacij lahko najdete na <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">tej</a> strani`,
+    More info is available on <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">this</a> site`,
     `<h6>Most common signs of infection</h6></br>
     The new coronavirus SARS-CoV-2 causes covid-19 disease, which is most commonly manifested by <b> malaise, fatigue, colds, fever, cough </b>, and in more severe forms with shortness of breath. The more severe course is characterized by pneumonia.
      </br>
      Infection with the new coronavirus cannot be distinguished from other causes of acute respiratory infections solely on the basis of the course of the disease and the patient's problems. <b> Microbiological testing </b> is required for confirmation or exclusion.</br>
-     Več informacij lahko najdete na <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">tej</a> strani`,
-    `<iframe width="560" height="315" src="https://www.youtube.com/embed/BtN-goy9VOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+     Več informacij lahko najdete na <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">tej</a> strani`
     ],
     //9
     ["Well that's fantastic. Stay well.", "Great, that's nice to hear.", "That's nice to hear", "Awesome.", "That's what I like to hear"],
@@ -129,9 +130,10 @@ const reply = [
         You can reach the call centre <b>free of charge</b> on workdays from <b>Monday to Friday between 8:00 and 18:00</b> at <b>080 1404</b>.
         If you are calling from abroad, you can reach the call centre at <b>+386 1 478 7550</b>.
     
-    `],
+    `,
+    `<iframe width="560" height="315" src="https://www.youtube.com/embed/BtN-goy9VOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`],
     //13
-    ["<h5>Do you want to play a game?</h5></br><a href='../../minigames/chase' target='game'>YES</a>"],
+    ["<h5>Do you want to play a game?</h5></br><span>Warning: not suitable for epileptics<span></br><a href='../../minigames/chase' target='game'>YES</a>"],
     //14
     [`Ask me things like:</br>
     statistics</br>
@@ -141,10 +143,25 @@ const reply = [
     restrictions</br>
     play game</br>
     help shopping</br>
+    tell me a joke</br>
     ...
     `],
+    //15
     [`We offer a service where you list the things you need and other people can volunteer to pick them up.</br>
-    Try it out <a href="../../requests/list" target="shopping">here</a>`]
+    Try it out <a href="../../request/list" target="shopping">here</a>`],
+    //16
+    ["Without you my life is as empty as the supermarket shelf.",
+    "If COVID-19 doesn't take you out... Can I?",
+    "Is that hand sanitizer in your pocket or are you just happy to be within 6ft of me?",
+    "Why does leaving the house feel like I'm making a supply run on an episode of the Walking dead?",
+    "Finland has just closed their borders. No one will be crossing the finish line.",
+    "My parents are just about to discover the teacher was not the problem.",
+    "Stay inside, isolate or practice social distancing, clean yourself. Omg, I've become a housecat.",
+    "Anyone else feel like life is being written by a 4th grader right now? ... and there was this virus and everyone was scared. And then the world ran out of toilet paper yeah, and then there was no school for like a month and then it snowed!",
+    "Being quarantined with a talkative child is like having an insane parrot super glued to your shoulder.",
+    "The mayor has ordered local bands to play their originals in public areas to prevent people from gathering.",
+    "Ladies, time to start dating older dudes. They can get you in the grocery store early."
+    ]
 ];
 
 const alternative = [
