@@ -4,25 +4,31 @@
 <head>
   <title>{{title}}</title>
   {{!-- <link rel='stylesheet' href='/stylesheets/style.css' /> --}}
-  <link rel='stylesheet' href='/stylesheets/main.css' />
+  <link rel='stylesheet' href='/stylesheets/myStyle.css' />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link href="../../stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <!-- Swipe core CSS -->
+  <link href="../../stylesheets/swipe.min.css" type="text/css" rel="stylesheet">
+
 </head>
 
 <body>
-
-  <div class="container 75%" style="border: 1px solid black;">
-    <header id="header" class="alt">
-      <h1><strong><a href="../../">Spatial</a></strong> by Templated</h1>
-      <nav id="nav">
-        <ul>
-          <li><a id="logout" href="javascript:void(0);" onclick="logout();">Logout</a></li>
-          <li><a id="login" href="../../users/login">Login</a></li>
-          <li><a id="register" href="../../users/register">Register</a></li>
-          <li><a id="requests" href="../../request/list">Requests</a></li>
-          <li><a href="../../bot/showchat">Chat Bot</a></li>
-        </ul>
-      </nav>
-    </header>
-    {{{body}}}
+  <header id="header" class="alt">
+    <nav id="nav">
+      <ul>
+        <li style="float: left;"><a href="../../">#NePozabiNaDruge</a></li>
+        
+        <li><a href="../../"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a id="logout" href="javascript:void(0);" onclick="logout();">Logout</a></li>
+        <li><a id="login" href="../../users/login">Login</a></li>
+        <li><a id="register" href="../../users/register">Register</a></li>
+        <li><a id="requests" href="../../request/list">Requests</a></li>
+        <li><a href="../../bot/showchat">Chat Bot</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container" style="border: 1px solid black;">
+  {{{body}}}
   </div>
   <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
@@ -56,7 +62,7 @@
         });
     }
 
-    
+
     function getCookie(name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
@@ -71,11 +77,11 @@
       document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
-    if(getCookie("user")){
+    if (getCookie("user")) {
       document.getElementById("login").style.visibility = "hidden";
       document.getElementById("register").style.visibility = "hidden";
     }
-    else{
+    else {
       document.getElementById("logout").style.visibility = "hidden";
       document.getElementById("requests").style.visibility = "hidden";
     }
