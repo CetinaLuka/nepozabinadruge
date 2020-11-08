@@ -1,3 +1,5 @@
+var stringSimilarity = require('string-similarity');
+
 function readMessage(message) {
     console.log(message);
     console.log("reading");
@@ -20,7 +22,7 @@ const trigger = [
     //0 
     ["hey", "hello", "what is up"],
     //1
-    ["what is the state of coronavirus", "number of, how many infections, infections, corona"],
+    ["what is the state of coronavirus", "number of", "how many infections", "infections", "corona"],
     //2
     ["what is going on", "what is up"],
     //3
@@ -68,6 +70,16 @@ const alternative = [
     "I'm listening...",
     "Bro..."
 ];
+
+function findAnswer(triggerArray, responseArray, text){
+    var matches = [];
+    for (let x = 0; x < triggerArray.length; x++) {
+        var best = stringSimilarity.findBestMatch(text, triggerArray[x])
+        console.log("best match: "+best);
+        matches.push(best);
+    }
+    console.log(matches)
+}
 
 function compare(triggerArray, replyArray, text) {
     let item;
