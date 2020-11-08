@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "cd nepozabinadruge && npm install",
     "start": "cd nepozabinadruge && npm start"
-  }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CetinaLuka/nepozabinadruge.git"
