@@ -9,13 +9,77 @@
                 </header>
             </div>
             <div class="6u$ 12u$(medium)">
-                <p>This website was established to... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non ea mollitia corporis id, distinctio
+                <p>This website was established to... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non ea
+                    mollitia corporis id, distinctio
                     sunt veritatis officiis dolore reprehenderit deleniti voluptatibus harum magna, doloremque alias
                     quisquam minus, eaque. Feugiat quod, nesciunt! Iste quos ipsam, iusto sit esse.</p>
                 <p>Dolorum aspernatur maxime libero ratione quidem distinctio, placeat fugiat laborum voluptatum enim
                     neque soluta vel sunt id ex veritatis. Labore rerum, odit sapiente, alias mollitia magnam
                     exercitationem modi amet earum quia atque ipsum voluptas asperiores quas laboriosam.</p>
             </div>
+            <div class="6u$ 12u$(medium)">
+                <canvas id="myChart" width="400" height="400"></canvas>
+
+            </div>
         </div>
     </div>
 </section>
+<script src="js/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'yesterday'],
+            datasets: [{
+                label: '# of confirmed COVID-19 cases in Slovenia',
+                data: [1564, 1686, 2026, 1176, 557, 1342],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    getData();
+
+    var last6days = [];
+    function getData() {
+    return fetch("https://api.covid19api.com/country/slovenia/status/confirmed")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            for(var i=data.length-1;i>data.length-7;i--)
+                last6days.push(data[i].Cases-data[i-1].Cases);
+
+            myChart.data.datasets.forEach((dataset) => {
+                dataset.data.push(data);
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
+</script>
