@@ -9,6 +9,7 @@
     var myGameArea = {
         canvas: document.createElement("canvas"),
         start: function () {
+            this.canvas.setAttribute("id","gamecanvas")
             this.canvas.width = 1000;
             this.canvas.height = 650;
             this.context = this.canvas.getContext("2d");
