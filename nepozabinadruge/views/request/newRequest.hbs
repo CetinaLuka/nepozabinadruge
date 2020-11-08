@@ -1,8 +1,63 @@
 <h2>New request</h2>
 <form action="/request" method="post">
-    <textarea class="form-control" id="requestText" rows="5"></textarea>
-    <input class="form-control" type="text" id="address" placeholder="Address" required><br>
+    <textarea class="form-control" id="requestText" rows="5"></textarea><br />
+    <input class="form-control" type="text" id="address" placeholder="Address" required><br />
+    <label class="radio-inline"><input type="radio" id="isRequest" name="optradio" checked>I require assistance</label>
+    <label class="radio-inline"><input type="radio" id="isNotRequest" name="optradio">I can assist</label><br />
     <div class="col-md-12 text-center">
-        <input class="form-control btn btn-info" type="submit" value="Add request">
+        <input class="form-control btn btn-info" type="button" value="Add request" onclick="addPost()">
     </div>
 </form>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
+<script>
+    // Initialize Cloud Firestore through Firebase
+    firebase.initializeApp({
+        apiKey: 'AIzaSyCy4I8vK968QoIV1QvWA4UzHG9A2o1vyNE',
+        authDomain: 'nepozabinadruge.firebaseapp.com',
+        projectId: 'nepozabinadruge'
+    });
+
+    var db = firebase.firestore();
+
+    function addPost() {
+        var requestText = document.getElementById("requestText").value;
+        var address = document.getElementById("address").value;
+        var isRequest = document.getElementById("isRequest").value;
+        if(isRequest == 'on'){
+            isRequest = true;
+        }
+        else{
+            isRequest = false;
+        }
+        var user = getCookie("user");
+        var userId = getCookie("userId");
+
+        db.collection("requests").add({
+            address: address,
+            email: user,
+            isRequest: isRequest,
+            userId: userId,
+            requestText: requestText
+        })
+            .then(function (docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
+    }
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
+</script>
