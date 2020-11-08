@@ -83,7 +83,6 @@ ul {
       border: none;
   }
   .myButton:hover {
-      background-color: #018786;
       background-color: #00a19f;
       cursor: pointer;
       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -93,6 +92,23 @@ ul {
     border:1px solid #d3d3d3;
     background-image: url("../images/map.png");
   }
+
+  .deleteButton{
+      background-color: #d50000;
+      text-align: center;
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      height: 50px;
+      font-weight: 900;
+      color: #333;
+      border: none;
+  }
+  .deleteButton:hover {
+    background-color: #e04141;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
 
   @keyframes shadowAnimation {
     from {box-shadow: 0px 0px #888888;}
@@ -104,6 +120,7 @@ ul {
   }
 
   .request{
+      
       margin-top:10px;
       margin-bottom: 10px;
       display: table;
@@ -117,8 +134,15 @@ ul {
   }
 
   .listArea {
-      margin:5px;
       height: auto;
+      resize: none;
+      border: none;
+      user-select: none;
+  }
+
+  .accepted{
+      padding-top: 16px;
+      padding-bottom: 16px;
   }
 
   #addNewButton{
@@ -133,4 +157,17 @@ ul {
   #addNewButton:hover{
     transform: scale(1.10);
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.requestEdge{
+    border: solid black 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.23);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.accDiv{
+    padding: 8px;
+    border:green solid 2px !important;
 }
