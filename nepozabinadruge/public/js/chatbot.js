@@ -19,31 +19,35 @@ const trigger = [
     //0 
     ["hey", "hello", "what is up", "hi", "wazzup", "jov"],
     //1
-    ["what is the state of coronavirus", "number of infected", "how many infections", "infections", "statistics"],
+    ["what is the state of coronavirus", "number of infected", "how many infections", "infections", "statistics", "daily", "daily corona"],
     //2
     ["what is going on", "what is up"],
     //3
-    ["janša", "janez", "janez janša", "what is prime minister doing", "what does janez janša say"],
+    ["jansa", "janez", "janez jansa", "what is prime minister doing", "what does janez janša say"],
     //4
     ["jelko", "kacin", "jelko kacin", "who are you"],
     //5
-    ["tell me story", "will there be new restrictions"],
+    ["will there be new restrictions", "video"],
     //6
     ["how are you", "how are you doing"],
     //7
     ["bye", "good bye", "goodbye", "adios"],
     //8
-    ["i have coronavirus", "im infected", "im sick", "i think i have coronavirus", "coronavirus", "i have corona", "what to do if you're sick"],
+    ["i have coronavirus", "im infected", "im sick", "i think i have coronavirus", "coronavirus", "i have corona", "what to do if you're sick", "corona", "sick", "covid"],
     //9
     ["great", "excellent", "im great", "im excellent", "im fine", "fine", "good", "fantastic","marvellous", "splendid"],
     //10
     ["not too good", "not good", "not well", "im not well", "bad", "im not feeling good", "im not feeling well"],
     //11
-    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there a lockdown", "what measures are in place", "current measures"],
+    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there a lockdown", "what measures are in place", "current measures", "restrictions", "lockdown", "police hour"],
     //12
-    ["where can i get mor information", "information", "info", "where can i get info", "what is the nuber of the call center", "coronavirus hotline"],
+    ["where can i get more information", "information", "info", "where can i get info", "what is the nuber of the call center", "coronavirus hotline", "phone"],
     //13
-    ["play a game", "play game", "i want to have fun", "can i go see my girlfriend", "i want to play a game"]
+    ["play a game", "play game", "i want to have fun", "can i go see my girlfriend", "i want to play game", "play", "game"],
+    //14
+    ["help", "!help", "/help", "commands", "how to use", "list commands"],
+    //15
+    ["i need help with groceries", "groceries", "shopping", "help needed", "shop", "food", "store", "help with groceries", "help shopping"]
 ];
 
 const reply = [
@@ -57,14 +61,10 @@ const reply = [
     ],
     //2
     [
-        `Ppzuizdsgidsf oidsoihrfdosi woiewfoewn </br>
-        sdoijdsoifndspofinodwsifnpwoijfpewojf </br>
-        <a href='//www.google.com' target='google'>Google</a>`,
-        "<a href='//www.google.com' target='google'>Google</a>"
+        `Nothing much, how about you?`
     ],
     //3
-    [`<a class="twitter-timeline" href="https://twitter.com/JJansaSDS?ref_src=twsrc%5Etfw">Tweets by JJansaSDS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> `,
-    `<iframe width="560" height="315" src="https://www.youtube.com/embed/BtN-goy9VOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    [`<a class="twitter-timeline" href="https://twitter.com/JJansaSDS?ref_src=twsrc%5Etfw">Tweets by JJansaSDS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> `
     ],
     //4
     [`<iframe width="560" height="315" src="https://www.youtube.com/embed/X78p9fcIU0Q?start=7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
@@ -89,7 +89,8 @@ const reply = [
     The new coronavirus SARS-CoV-2 causes covid-19 disease, which is most commonly manifested by <b> malaise, fatigue, colds, fever, cough </b>, and in more severe forms with shortness of breath. The more severe course is characterized by pneumonia.
      </br>
      Infection with the new coronavirus cannot be distinguished from other causes of acute respiratory infections solely on the basis of the course of the disease and the patient's problems. <b> Microbiological testing </b> is required for confirmation or exclusion.</br>
-     Več informacij lahko najdete na <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">tej</a> strani`
+     Več informacij lahko najdete na <a href="https://www.gov.si/en/topics/coronavirus-disease-covid-19/" target= "covidGov">tej</a> strani`,
+    `<iframe width="560" height="315" src="https://www.youtube.com/embed/BtN-goy9VOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
     ],
     //9
     ["Well that's fantastic. Stay well.", "Great, that's nice to hear.", "That's nice to hear", "Awesome.", "That's what I like to hear"],
@@ -130,7 +131,20 @@ const reply = [
     
     `],
     //13
-    ["<h5>Do you want to play a game?</h5></br><a href='../../minigames/chase' target='game'>YES</a>"]
+    ["<h5>Do you want to play a game?</h5></br><a href='../../minigames/chase' target='game'>YES</a>"],
+    //14
+    [`Ask me things like:</br>
+    statistics</br>
+    who are you</br>
+    what to do if you're sick</br>
+    information</br>
+    restrictions</br>
+    play game</br>
+    help shopping</br>
+    ...
+    `],
+    [`We offer a service where you list the things you need and other people can volunteer to pick them up.</br>
+    Try it out <a href="../../requests/list" target="shopping">here</a>`]
 ];
 
 const alternative = [
@@ -144,7 +158,7 @@ const alternative = [
     "What would you like me to do",
     "I hear you...",
     "These are tough times",
-    "My grandma always said baid things don't last forever. I hope that helps a little bit."
+    "My grandma always said bad things don't last forever. I hope that helps a little bit."
 ];
 
 function compare(triggerArray, replyArray, text) {
@@ -152,12 +166,13 @@ function compare(triggerArray, replyArray, text) {
     let index = 0;
 
     for (let x = 0; x < triggerArray.length; x++) {
-        for (let y = 0; y < replyArray.length; y++) {
-            if (triggerArray[x][y] == text) {
+        for (let y = 0; y < triggerArray[x].length; y++) {
+            console.log("["+x+"]"+"["+y+"]"+triggerArray[x][y]);
+            if (triggerArray[x][y].localeCompare(text) ==0) {
+                console.log(triggerArray[x][y]+" == "+text);
                 items = replyArray[x];
                 item = items[Math.floor(Math.random() * items.length)];
                 index = x;
-                break;
             }
         }
     }
