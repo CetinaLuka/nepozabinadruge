@@ -24,10 +24,16 @@
             data+='</textarea><br/> <span> Address: <b>';
             data+= `${doc.data().address}`;
             data+='</b></span>'
-            data+='<button class="myButton">I will do it</button>'
+            data+='<button class="myButton" onclick="update(`'
+            data+= `${doc.id}`;
+            data+='`)">I will do it</button>'
             data+='</div>'
             element.insertAdjacentHTML("beforeend", data);
         });
     });
+
+    function update(id){
+        db.collection("requests").doc(id).update({isAccepted: "true"});
+    }
 
 </script>
