@@ -1,3 +1,24 @@
 
 <h2>Request list</h2>
-<a href="../../request/add"> <button type="button" class="btn input-block-level" style="margin: auto;">Add new request</button></a>
+<a href="../../request/add"> <button type="button" class="myButton" style="margin: auto;">Add new request</button></a>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
+<script>
+    // Initialize Cloud Firestore through Firebase
+    firebase.initializeApp({
+        apiKey: 'AIzaSyCy4I8vK968QoIV1QvWA4UzHG9A2o1vyNE',
+        authDomain: 'nepozabinadruge.firebaseapp.com',
+        projectId: 'nepozabinadruge'
+    });
+
+    var db = firebase.firestore();
+
+    db.collection("requests").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data()}`);
+        });
+    });
+
+</script>
