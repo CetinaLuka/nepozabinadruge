@@ -35,11 +35,15 @@ const trigger = [
     //8
     ["i have coronavirus", "im infected", "im sick", "i think i have coronavirus", "coronavirus", "i have corona", "what to do if you're sick"],
     //9
-    ["great", "excellent", "im great", "im excellent", "im fine", "fine", "good"],
+    ["great", "excellent", "im great", "im excellent", "im fine", "fine", "good", "fantastic","marvellous", "splendid"],
     //10
     ["not too good", "not good", "not well", "im not well", "bad", "im not feeling good", "im not feeling well"],
     //11
-    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there a lockdown", "what measures are in place", "current measures"]
+    ["what are the current restrictions", "what is the government doing to stop the coronavirus", "is there a lockdown", "what measures are in place", "current measures"],
+    //12
+    ["where can i get mor information", "information", "info", "where can i get info", "what is the nuber of the call center", "coronavirus hotline"],
+    //13
+    ["play a game", "play game", "i want to have fun", "can i go see my girlfriend", "i want to play a game"]
 ];
 
 const reply = [
@@ -114,7 +118,19 @@ const reply = [
         5. religious ceremonies.</br>
     `,
     `<h5><b>Restriction of movement between municipalities</b></h5></br>
-    Movement between municipalities is prohibited with certain exceptions for which adequate proof must be submitted. The territories of municipalities are defined in the Act on the Establishment of Municipalities and Municipal Boundaries. The list of municipalities is published on the <a href="https://www.gov.si/en/state-authorities/municipalities/" target="gov">GOV.SI webpage</a>. `],
+    Movement between municipalities is prohibited with certain exceptions for which adequate proof must be submitted. The territories of municipalities are defined in the Act on the Establishment of Municipalities and Municipal Boundaries. The list of municipalities is published on the <a href="https://www.gov.si/en/state-authorities/municipalities/" target="gov">GOV.SI webpage</a>. `
+    ],
+    //12
+    [`
+    <h5><b>Call centre for information on the coronavirus</b></h5></br>
+    A call centre has been set up again to assist people in obtaining reliable information regarding the coronavirus. Senior year students of the Faculty of Medicine of the University of Ljubljana under the mentorship of relevant experts will answer your questions. 
+    
+        You can reach the call centre <b>free of charge</b> on workdays from <b>Monday to Friday between 8:00 and 18:00</b> at <b>080 1404</b>.
+        If you are calling from abroad, you can reach the call centre at <b>+386 1 478 7550</b>.
+    
+    `],
+    //13
+    ["<h5>Do you want to play a game?</h5></br><a href='../../minigames/chase' target='game'>YES</a>"]
 ];
 
 const alternative = [
@@ -134,7 +150,6 @@ const alternative = [
 function compare(triggerArray, replyArray, text) {
     let item = alternative[Math.floor(Math.random() * alternative.length)];
     let index = 0;
-    console.log(text);
 
     for (let x = 0; x < triggerArray.length; x++) {
         for (let y = 0; y < replyArray.length; y++) {
@@ -148,7 +163,6 @@ function compare(triggerArray, replyArray, text) {
     }
     console.log("index is: " + index);
     if (index == 1) {
-        console.log("index is 1");
         return getData();
     }
     else{
@@ -159,12 +173,10 @@ function getData() {
     return fetch("https://api.apify.com/v2/key-value-stores/603AyvQ8QjyqmnZx6/records/LATEST?disableRedirect=true")
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             return "Daily new cases: " + data.dailyInfected + "</br>" + "Daily tested: " + data.dailyTested + "</br>" + "Daily deaths: " + data.dailyDeaths+"</br> You can find more data on the <a href='https://covid-19.sledilnik.org/en/stats' target='tracker'>covid-19 tracker site</a>";
             
         })
         .catch(error => {
-            console.log("error");
             return null;
         })
 }
