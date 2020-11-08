@@ -42,9 +42,10 @@
                             <div class="col-md-12">
                                 <div class="bottom" style="padding: 0px; padding-top: 25px">
                                     <form id="message_input" class="position-relative w-100">
-                                        <textarea id="message_text" class="form-control" placeholder="Start typing for reply..." rows="1"
+                                        <textarea id="message_text" class="form-control"
+                                            placeholder="Start typing for reply..." rows="1"
                                             style="padding-left: 20px"></textarea>
-                                        <button type="submit" class="btn send"><i
+                                        <button id="send_button" type="submit" class="btn send"><i
                                                 class="material-icons">send</i></button>
                                     </form>
                                 </div>
@@ -66,11 +67,13 @@
 <script src="../../js/swipe.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/chatbot.js"></script>
+<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+<script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script>
     function scrollToBottom(el) {
-         document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight; 
+        document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight;
     }
-    function getTime(){
+    function getTime() {
         var now = new Date(Date.now());
         var formatted = now.getHours() + ":" + now.getMinutes();
         // 20:10:58
@@ -81,16 +84,16 @@
                                         <div class="text-main">
                                             <div class="text-group me">
                                                 <div class="text me">
-                                                    <p>`+text+`</p>
+                                                    <p>`+ text + `</p>
                                                 </div>
                                             </div>
-                                            <span>`+getTime()+`</span>
+                                            <span>`+ getTime() + `</span>
                                         </div>
                                     </div>`;
         $(".timeline").append(message);
         scrollToBottom();
     }
-    function showWriting(){
+    function showWriting() {
         console.log("writing");
         var message = `<div class="message writing">
                             <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip"
@@ -108,8 +111,8 @@
                             </div>
                         </div>`
         $(".timeline").append(message);
-        setTimeout(function() {
-            $('.writing').hide('slow', function(){ $('.writing').remove(); });
+        setTimeout(function () {
+            $('.writing').hide('slow', function () { $('.writing').remove(); });
         }, 1000);
     }
     function postBotMessage(text) {
@@ -117,15 +120,15 @@
                             <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
                             <div class="text-main">
                                 <div class="text-group">
-                                    <div class="text">
-                                        <p>`+text+`</p>
+                                    <div class="text" style="max-width:600px">
+                                        <p>`+ text + `</p>
                                         </div>
                                     </div>
-                                <span>`+getTime()+`</span>
+                                <span>`+ getTime() + `</span>
                             </div>
                         </div>`;
         showWriting();
-        setTimeout(function() {
+        setTimeout(function () {
             $(".timeline").append(message);
         }, 1000);
         scrollToBottom();
@@ -135,7 +138,7 @@
         console.log("greetings")
     });
 
-    function escapeHtml (string) {
+    function escapeHtml(string) {
         var entityMap = {
             '&': '&amp;',
             '<': '&lt;',
@@ -150,15 +153,35 @@
             return entityMap[s];
         });
     }
-    $("#message_input").submit(function(e){
-        e.preventDefault();
-        console.log("form submitted");
+    function submitForm() {
         var message = $("#message_text").val();
         $("#message_text").val("");
-        console.log(message);
+        console.log(message.replace(/(\r\n|\n|\r)/gm, ""));
         postMeMessage(escapeHtml(message));
-        var response = readMessage(message);
+        var response = readMessage(message)
         console.log(response);
-        postBotMessage(response);
+        if (response instanceof Promise) {
+            console.log("promise");
+            response.then(response => postBotMessage(response));
+        }
+        else {
+            postBotMessage(response);
+        }
+    }
+    $("#message_input").submit(function (e) {
+        e.preventDefault();
+        console.log("form submitted");
+        submitForm();
+    });
+    $("#message_text").keyup(function (e) {
+        if ((e.keyCode || e.which) == 13) { //Enter keycode
+            e.preventDefault();
+            $("#send_button").click();
+        }
+    });
+    $("#message_text").keydown(function (e) {
+        if ((e.keyCode || e.which) == 13) { //Enter keycode
+            e.preventDefault();
+        }
     });
 </script>

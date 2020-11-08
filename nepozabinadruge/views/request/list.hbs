@@ -1,6 +1,7 @@
 
 <h2>Request list</h2>
-<a href="../../request/add"> <button type="button" class="myButton" style="margin: auto;">Add new request</button></a>
+<div id="requestList" class="row2"></div>
+<a href="../../request/add"> <button type="button" class="myButton" style="margin: auto;" id = "addNewButton">Add new request</button></a>
 
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
@@ -14,10 +15,18 @@
     });
 
     var db = firebase.firestore();
-
+    var element = document.getElementById("requestList");
     db.collection("requests").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
+            var data = '<div class="request col-4" > <textarea class="listArea" rows="6">'
+            data+= `${doc.data().requestText}`;
+            data+='</textarea><br/> <span> Address: <b>';
+            data+= `${doc.data().address}`;
+            data+='</b></span>'
+            data+='<button class="myButton">I will do it</button>'
+            data+='</div>'
+            element.insertAdjacentHTML("beforeend", data);
         });
     });
 
