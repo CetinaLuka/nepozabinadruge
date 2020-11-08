@@ -23,7 +23,7 @@ const trigger = [
     //2
     ["what is going on", "what is up"],
     //3
-    ["happy", "good", "well", "fantastic", "cool"],
+    ["janša", "janez", "janez janša", "predsednik vlade", "kaj pravi janez janša", "kaj pravi predsednik vlade"],
     //4
     ["bad", "bored", "tired", "sad"],
     //5
@@ -51,7 +51,9 @@ const reply = [
         "<a href='//www.google.com' target='google'>Google</a>"
     ],
     //3
-    ["Glad to hear it"],
+    [`<a class="twitter-timeline" href="https://twitter.com/JJansaSDS?ref_src=twsrc%5Etfw">Tweets by JJansaSDS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> `,
+    `<iframe width="560" height="315" src="https://www.youtube.com/embed/BtN-goy9VOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    ],
     //4
     ["Why?", "Cheer up buddy"],
     //5
@@ -73,6 +75,7 @@ const alternative = [
 function compare(triggerArray, replyArray, text) {
     let item = alternative[Math.floor(Math.random() * alternative.length)];
     let index = 0;
+    console.log(text);
 
     for (let x = 0; x < triggerArray.length; x++) {
         for (let y = 0; y < replyArray.length; y++) {
