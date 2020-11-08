@@ -26,7 +26,11 @@
             if(doc.data().isAccepted){
                 data+=' accDiv';
             }
-            data+='"><textarea readonly class="listArea" rows="6">'
+            data+='">'
+            data+='<div onclick="deleteEntry(`';
+            data+=`${doc.id}`;
+            data+='`)"><i class="fa fa-trash"></i></div>';
+            data+='<textarea readonly class="listArea" rows="6">';
             data+= `${doc.data().requestText}`;
             data+='</textarea ><br/> <span> Address: <b>';
             data+= `${doc.data().address}`;
@@ -51,6 +55,14 @@
 
     function update(id){
         db.collection("requests").doc(id).update({isAccepted: true});
+    }
+
+    function deleteEntry(id){
+        db.collection("requests").doc(id).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
     }
 
     function getCookie(name) {
