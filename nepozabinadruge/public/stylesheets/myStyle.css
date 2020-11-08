@@ -84,3 +84,8 @@ ul {
   .myButton:hover {
       background-color: #018786;
   }
+
+  canvas {
+    border:1px solid #d3d3d3;
+    background-image: url("../images/map.png");
+}
