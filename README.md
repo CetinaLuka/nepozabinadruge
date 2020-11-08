@@ -1,5 +1,7 @@
 # NePozabiNaDruge
 
+[Live Demo](https://nepozabinadruge.herokuapp.com/)
+
 ## Description
 Our project called NePozabiNaDruge (DontForgetAboutOthers) is intended for all people from Slovenia (with the option of expanding to other countries) during the sifficult times of Covid-19. It is an interactive platform - a web panel of sorts for all things related to the virus and the current situation in Slovenia. From interactive chatbot Jelko, users can get all the latest info and navigate through the website easier. There is also a tab for posting requests for those from remote locations, of certain age or generally in need. Meant as sort of a community driven  service, other kind people can volunteer and offer their services doing good deeds for other people in their neighbourhood. With options as limitless as the sky, we personally believe in this project, that it has all the potential of encouraging good will between people, bringing them close together (not necessarily phisically) and could benefit the greater good in a simple, yet fun and innovative way.
 
