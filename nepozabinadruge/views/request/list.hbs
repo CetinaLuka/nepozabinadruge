@@ -43,6 +43,7 @@
             console.log(doc.data().userId +'  ' + getCookie("userId") + '  ' +doc.data().userId == getCookie("userId"))
             if(doc.data().userId == getCookie("userId")) {
                 data = data.replace("myButton", "deleteButton");
+                data = data.replace("I will do it", "Delete");
                 myElement.insertAdjacentHTML("beforeend", data);
             }
             else element.insertAdjacentHTML("beforeend", data);

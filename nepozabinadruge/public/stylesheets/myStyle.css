@@ -171,3 +171,7 @@ ul {
     padding: 8px;
     border:green solid 2px !important;
 }
+
+#myChart{
+    margin:20px;
+}
