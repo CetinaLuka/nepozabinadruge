@@ -19,17 +19,22 @@
     var db = firebase.firestore();
     var element = document.getElementById("requestList");
     var myElement = document.getElementById("myRequestList");
+    var array= [];
+    var arrayIds= [];
     db.collection("requests").get().then((querySnapshot) => {
+        //array = querySnapshot;
         querySnapshot.forEach((doc) => {
+            array.push(doc.data())
+            arrayIds.push(doc.id)
             console.log(`${doc.id} => ${doc.data()}`);
             var data = '<div class="request col-4" > <div class="requestEdge';
             if(doc.data().isAccepted){
                 data+=' accDiv';
             }
             data+='">'
-            data+='<div onclick="deleteEntry(`';
-            data+=`${doc.id}`;
-            data+='`)"><i class="fa fa-trash"></i></div>';
+            //data+='<div onclick="deleteEntry(`';
+            //data+=`${doc.id}`;
+            //data+='`)"><i class="fa fa-trash"></i></div>';
             data+='<textarea readonly class="listArea" rows="6">';
             data+= `${doc.data().requestText}`;
             data+='</textarea ><br/> <span> Address: <b>';
@@ -54,16 +59,24 @@
         });
     });
 
-    function update(id){
-        db.collection("requests").doc(id).update({isAccepted: true});
-    }
-
-    function deleteEntry(id){
-        db.collection("requests").doc(id).delete().then(function() {
-            console.log("Document successfully deleted!");
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+    function update(rowId){
+        var user;
+        for(var i=0;i<arrayIds.length;i++){
+            if(arrayIds[i]==rowId){
+                user = array[i].userId;
+            }
+        }
+        if(getCookie(userId)==doc.data().userId){
+            db.collection("requests").doc(rowId).delete().then(function() {
+                console.log("Document successfully deleted!");
+            }).catch(function(error) {
+                console.error("Error removing document: ", error);
+            });
+        }
+        else{
+            console.log("editing")
+            db.collection("requests").doc(rowId).update({isAccepted: true});
+        }
     }
 
     function getCookie(name) {
