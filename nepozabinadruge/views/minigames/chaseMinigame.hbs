@@ -1,0 +1,143 @@
+<script>
+    var myGamePiece;
+
+    window.onload = function startGame() {
+        myGamePiece = new component(30, 50, "../images/car.jpg", 225, 225, "image");
+        myGameArea.start();
+    }
+
+    var myGameArea = {
+        canvas: document.createElement("canvas"),
+        start: function () {
+            this.canvas.width = 1000;
+            this.canvas.height = 650;
+            this.context = this.canvas.getContext("2d");
+            //document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+            document.body.appendChild(this.canvas);
+            this.frameNo = 0;
+            this.interval = setInterval(updateGameArea, 20);
+            window.addEventListener('keydown', function (e) {
+                e.preventDefault();
+                myGameArea.keys = (myGameArea.keys || []);
+                myGameArea.keys[e.keyCode] = (e.type == "keydown");
+            })
+            window.addEventListener('keyup', function (e) {
+                myGameArea.keys[e.keyCode] = (e.type == "keydown");
+            })
+        },
+        stop: function () {
+            clearInterval(this.interval);
+        },
+        clear: function () {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+    }
+
+    function component(width, height, color, x, y, type) {
+
+        this.type = type;
+        if (type == "image") {
+            this.image = new Image();
+            this.image.src = color;
+        }
+        this.width = width;
+        this.height = height;
+        this.speed = 0;
+        this.angle = 90;
+        this.moveAngle = 0;
+        this.x = x;
+        this.y = y;
+        this.update = function () {
+            ctx = myGameArea.context;
+
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            if (type == "image") {
+                ctx.drawImage(this.image,
+                    this.width / -2,
+                    this.height / -2,
+                    this.width, this.height);
+            } else {
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        //ctx.fillStyle = color;
+        //ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+                ctx.restore();
+        }
+        this.newPos = function () {
+            this.angle += this.moveAngle * Math.PI / 180;
+            this.x += this.speed * Math.sin(this.angle);
+            this.y -= this.speed * Math.cos(this.angle);
+            detectLine(this.x, this.y);
+        }
+    }
+
+    function updateGameArea() {
+        myGameArea.clear();
+        myGamePiece.moveAngle = 0;
+        myGamePiece.speed = 0;
+        if (myGameArea.keys && myGameArea.keys[37]) { myGamePiece.moveAngle = -1; }
+        if (myGameArea.keys && myGameArea.keys[39]) { myGamePiece.moveAngle = 1; }
+        if (myGameArea.keys && myGameArea.keys[38]) { myGamePiece.speed = 1; }
+        if (myGameArea.keys && myGameArea.keys[40]) { myGamePiece.speed = -1; }
+        myGamePiece.newPos();
+        myGamePiece.update();
+    }
+
+    function detectLine(x, y) {
+        /*ctx = myGameArea.context;
+        var imageData = ctx.getImageData(0, 0, myGameArea.canvas.width, myGameArea.canvas.height),
+            inputData = imageData.data,
+            pData = (~~x + (~~y * myGameArea.canvas.width)) * 4;
+    
+        if (inputData[pData + 3]) {
+            return true;
+        }*/
+        if (x < 120 || y < 200 || x > 350 || y > 400) {
+            var ctx = myGameArea.canvas.getContext("2d");
+            ctx.font = "30px Arial";
+            ctx.fillText("Oh no, Kacin is after you!", 10, 50);
+            if (x < 0 || y < 0 || x > myGameArea.canvas.width || y > myGameArea.canvas.height) {
+                var ctx = myGameArea.canvas.getContext("2d");
+                ctx.font = "30px Arial";
+                ctx.fillText("Great succes! You have successfully escaped to a foreign country.", 10, 100);
+            }
+            enabled=true;
+            changecolors();
+            return true;
+        }
+        document.body.style.background = "#fdfdfd";
+        enabled=false;
+        return false;
+    }
+
+    var x;
+    var enabled;
+
+    function changecolors() {
+        x = 1;
+        setInterval(change, 1000);
+    }
+
+    function change() {
+        if(!enabled)
+            return;
+        if (x === 1) {
+            color = "red";
+            x = 2;
+        } else {
+            color = "blue";
+            x = 1;
+        }
+
+        document.body.style.background = color;
+    }
+
+
+</script>
+
+<p>Kanvas mora biti v focusu in za premikanje uporabljajte puščice na tipkovnici.</p>
+
+{{!-- </html> --}}
