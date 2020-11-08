@@ -20,14 +20,12 @@
                                 <div class="col-md-12">
                                     <div class="inside">
                                         <a href="#"><img class="avatar-md" src="../../images/jelko.jpeg"
-                                                data-toggle="tooltip" data-placement="top" title="Keith"
+                                                data-toggle="tooltip" data-placement="top" title="Jelko"
                                                 alt="avatar"></a>
                                         <div class="data">
                                             <h5><a href="#">Jelko</a></h5>
-                                            <span>State speaker</span>
+                                            <span>Government speaker</span>
                                         </div>
-                                        <button class="btn d-md-block d-none" style="margin-right: 0px"><i
-                                                class="material-icons md-30">info</i></button>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +42,7 @@
                                     <form id="message_input" class="position-relative w-100">
                                         <textarea id="message_text" class="form-control"
                                             placeholder="Start typing for reply..." rows="1"
-                                            style="padding-left: 20px"></textarea>
+                                            style="padding-left: 20px;color: #575757 !important"></textarea>
                                         <button id="send_button" type="submit" class="btn send"><i
                                                 class="material-icons">send</i></button>
                                     </form>
@@ -111,6 +109,7 @@
                             </div>
                         </div>`
         $(".timeline").append(message);
+        scrollToBottom();
         setTimeout(function () {
             $('.writing').hide('slow', function () { $('.writing').remove(); });
         }, 1000);
@@ -120,7 +119,7 @@
                             <img class="avatar-md" src="../../images/jelko.jpeg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
                             <div class="text-main">
                                 <div class="text-group">
-                                    <div class="text" style="max-width:600px">
+                                    <div class="text" style="max-width:600px; color: #575757;">
                                         <p>`+ text + `</p>
                                         </div>
                                     </div>
@@ -130,12 +129,11 @@
         showWriting();
         setTimeout(function () {
             $(".timeline").append(message);
+            scrollToBottom();
         }, 1000);
-        scrollToBottom();
     }
     $(document).ready(function () {
-        postBotMessage(escapeHtml("Greetings citizen"));
-        console.log("greetings")
+        postBotMessage("Greetings citizen </br> How can I help you?");
     });
 
     function escapeHtml(string) {
@@ -172,6 +170,7 @@
         e.preventDefault();
         console.log("form submitted");
         submitForm();
+
     });
     $("#message_text").keyup(function (e) {
         if ((e.keyCode || e.which) == 13) { //Enter keycode
