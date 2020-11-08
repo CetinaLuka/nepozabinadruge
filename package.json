@@ -1,0 +1,4 @@
+"scripts": {
+    "postinstall": "cd nepozabinadruge && npm install",
+    "start": "cd nepozabinadruge && npm start"
+}
